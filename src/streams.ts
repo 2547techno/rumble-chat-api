@@ -7,19 +7,11 @@ setInterval(() => {
     for (const key of connections.keys()) {
         if (!connections.has(key)) continue;
 
-        if (streams.get(key)?.readyState === EventSource.CLOSED) {
-            streams.get(key)?.close();
-            streams.delete(key);
-            connections.delete(key);
-            console.log("[SSE] Removed", key, "(closed)");
-            continue;
-        }
-
-        if (Number(connections.get(key)) <= 0) {
-            streams.get(key)?.close();
-            streams.delete(key);
-            connections.delete(key);
-            console.log("[SSE] Removed", key);
+        if (
+            streams.get(key)?.readyState === EventSource.CLOSED ||
+            Number(connections.get(key)) <= 0
+        ) {
+            removeStream(key);
         }
     }
 }, 30_000);
@@ -28,6 +20,13 @@ enum MessageType {
     INIT = "init",
     MESSAGES = "messages",
     DELETE_NON_RANT = "delete_non_rant_messages",
+}
+
+function removeStream(sid: number) {
+    streams.get(sid)?.close();
+    streams.delete(sid);
+    connections.delete(sid);
+    console.log("[SSE] Removed", sid);
 }
 
 export function addStream(sid: number) {
