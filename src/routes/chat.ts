@@ -43,8 +43,8 @@ router.get("/chat/:video", async (req, res) => {
     try {
         sid = await urlIdToStreamId(id);
     } catch (err) {
-        console.log(err);
-        return res.status(500);
+        console.log((err as Error).message);
+        return res.status(500).send();
     }
 
     return res.json({
@@ -61,8 +61,8 @@ router.get("/chat/channel/:channel", async (req, res) => {
     try {
         sid = await urlIdToStreamId(`/c/${req.params.channel}/live/`);
     } catch (err) {
-        console.log(err);
-        return res.status(500);
+        console.log((err as Error).message);
+        return res.status(500).send();
     }
 
     return res.json({
