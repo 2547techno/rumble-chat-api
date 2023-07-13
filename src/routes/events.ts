@@ -53,9 +53,9 @@ function parseMessages(data: any) {
 
 router.get("/events/chat/:id", async (req, res) => {
     const sid = Number(req.params.id);
-    try {   
+    try {
         await addStream(sid);
-    } catch(err) {
+    } catch (err) {
         return res.status(404).send();
     }
     connections.set(sid, Number(connections.get(sid) ?? 0) + 1);

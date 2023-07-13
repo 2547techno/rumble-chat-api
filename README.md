@@ -1,13 +1,18 @@
 # Routes
 
 ## `/chat/:video`
+
 Get the stream ID of a video
+
 ### Params
+
 `video`: The video ID or slug, example:
-- `v2o2oe5-synthwave-radio-beats-to-chillgame-to.html`
-- `v2o2oe5`
+
+-   `v2o2oe5-synthwave-radio-beats-to-chillgame-to.html`
+-   `v2o2oe5`
 
 ### Response
+
 ```ts
 {
     "streamId": number
@@ -15,13 +20,17 @@ Get the stream ID of a video
 ```
 
 ## `/chat/channel/:channel`
+
 Get the stream ID of channel's latest video/stream.
 
 ie. The video that is served when going to `https://rumble.com/c/channel_name/live/`
+
 ### Params
+
 `channel`: The channel name
 
 ### Response
+
 ```ts
 {
     "streamId": number
@@ -29,13 +38,17 @@ ie. The video that is served when going to `https://rumble.com/c/channel_name/li
 ```
 
 ## `/events/chat/:id`
+
 Receive chat message events
 
 ### Params
+
 `id`: Stream ID
 
 ### Reponse
+
 SSE stream of chat messages of type `Message[]`
+
 ```ts
 type User = {
     id: string;
