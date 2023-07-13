@@ -64,6 +64,7 @@ router.get("/events/chat/:id", async (req, res) => {
     res.setHeader("Content-Type", "text/event-stream");
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Connection", "keep-alive");
+    res.setHeader("X-Accel-Buffering", "no");
     res.flushHeaders();
 
     events.on(`chat-${req.params.id}`, (data) => {
