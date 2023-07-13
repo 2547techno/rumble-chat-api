@@ -29,8 +29,11 @@ function removeStream(sid: number) {
     console.log("[SSE] Removed", sid);
 }
 
-export function addStream(sid: number) {
+export async function addStream(sid: number) {
     if (streams.has(sid)) return;
+
+    const res = await fetch(`https://web7.rumble.com/chat/api/chat/${sid}/stream`);
+    if (res.status === 204 || !res.ok) throw new Error(`Cannot connect to chat | status ${res.status}`);
 
     const sse = new EventSource(
         `https://web7.rumble.com/chat/api/chat/${sid}/stream`

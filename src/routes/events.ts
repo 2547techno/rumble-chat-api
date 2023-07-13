@@ -51,9 +51,13 @@ function parseMessages(data: any) {
     return messages;
 }
 
-router.get("/events/chat/:id", (req, res) => {
+router.get("/events/chat/:id", async (req, res) => {
     const sid = Number(req.params.id);
-    addStream(sid);
+    try {   
+        await addStream(sid);
+    } catch(err) {
+        return res.status(404).send();
+    }
     connections.set(sid, Number(connections.get(sid) ?? 0) + 1);
 
     res.setHeader("Cache-Control", "no-cache");
