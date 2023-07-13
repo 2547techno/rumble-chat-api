@@ -52,4 +52,22 @@ router.get("/chat/:video", async (req, res) => {
     });
 });
 
+router.get("/chat/channel/:channel", async (req, res) => {
+    if (!req.params.channel) {
+        return res.status(400).send();
+    }
+
+    let sid: number;
+    try {
+        sid = await urlIdToStreamId(`/c/${req.params.channel}/live/`);
+    } catch (err) {
+        console.log(err);
+        return res.status(500);
+    }
+
+    return res.json({
+        streamId: sid,
+    });
+});
+
 export { router as chat };

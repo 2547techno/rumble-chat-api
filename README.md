@@ -14,6 +14,20 @@ Get the stream ID of a video
 }
 ```
 
+## `/chat/channel/:channel`
+Get the stream ID of channel's latest video/stream.
+
+ie. The video that is served when going to `https://rumble.com/c/channel_name/live/`
+### Params
+`channel`: The channel name
+
+### Response
+```ts
+{
+    "streamId": number
+}
+```
+
 ## `/events/chat/:id`
 Receive chat message events
 
