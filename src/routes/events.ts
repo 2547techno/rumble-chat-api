@@ -67,13 +67,16 @@ router.get("/events/chat/:id", async (req, res) => {
     res.setHeader("X-Accel-Buffering", "no");
     res.flushHeaders();
 
-    events.on(`chat-${req.params.id}`, (data) => {
+    const cb = (data: any) => {
         const messages = parseMessages(data);
         res.write(`data: ${JSON.stringify(messages)}\n\n`);
-    });
+    };
+
+    events.on(`chat-${req.params.id}`, cb);
 
     res.on("close", () => {
         connections.set(sid, Number(connections.get(sid) ?? 0) - 1);
+        events.removeListener(`chat-${req.params.id}`, cb);
         res.end();
     });
 });
