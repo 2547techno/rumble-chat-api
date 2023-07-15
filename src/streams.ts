@@ -45,7 +45,16 @@ export async function addStream(sid: number) {
         const data = JSON.parse(msg.data);
         switch (data.type as MessageType) {
             case MessageType.INIT: {
-                events.emit(`chat-${sid}`, data.data);
+                // events.emit(`chat-${sid}`, data.data);
+                /*
+                    Initial messages will only be sent to clients who triggered
+                    the creation of the EventSource (and any joined at the same time)
+                    
+                    Since I don't want to keep a list of latest messages for a stream,
+                    future connected clients will not receive an inital list of messages
+
+                    I'd rather not send the initial message altogether to be consistent
+                */
                 break;
             }
             case MessageType.MESSAGES: {
