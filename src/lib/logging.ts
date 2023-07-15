@@ -19,7 +19,7 @@ class Logger {
     }
 
     private log(text: string, object?: object) {
-        console.log(chalk.yellowBright(new Date().toLocaleString()), text);
+        console.log(chalk.yellow(new Date().toLocaleString()), text);
         if (object) {
             console.log(object);
         }
@@ -28,8 +28,8 @@ class Logger {
     error(label: string, text: string, object?: object) {
         if (this.level >= Level.ERROR) {
             this.log(
-                `${chalk.bgRedBright.black.bold("[ERROR]")}` +
-                    chalk.greenBright(` <${label}> `) +
+                `${chalk.bgRed.bold("[ERROR]")}` +
+                    chalk.green(` <${label}> `) +
                     `${text}`,
                 object
             );
@@ -39,8 +39,8 @@ class Logger {
     warn(label: string, text: string, object?: object) {
         if (this.level >= Level.WARN) {
             this.log(
-                `${chalk.bgYellowBright.black.bold("[WARN]")}` +
-                    chalk.greenBright(` <${label}> `) +
+                `${chalk.bgYellow.bold("[WARN]")}` +
+                    chalk.green(` <${label}> `) +
                     `${text}`,
                 object
             );
@@ -50,8 +50,8 @@ class Logger {
     info(label: string, text: string, object?: object) {
         if (this.level >= Level.INFO) {
             this.log(
-                `${chalk.bgBlueBright.black.bold("[INFO]")}` +
-                    chalk.greenBright(` <${label}> `) +
+                `${chalk.bgBlue.bold("[INFO]")}` +
+                    chalk.green(` <${label}> `) +
                     `${text}`,
                 object
             );
@@ -61,8 +61,8 @@ class Logger {
     debug(label: string, text: string, object?: object) {
         if (this.level >= Level.DEBUG) {
             this.log(
-                `${chalk.bgMagentaBright.black.bold("[DEBUG]")}` +
-                    chalk.greenBright(` <${label}> `) +
+                `${chalk.bgMagenta.bold("[DEBUG]")}` +
+                    chalk.green(` <${label}> `) +
                     `${text}`,
                 object
             );
