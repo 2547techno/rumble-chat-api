@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { events } from "../events";
-import { addStream, connections } from "../streams";
+import { events } from "../lib/events";
+import { addStream, connections } from "../lib/streams";
 const router = Router();
 
 type User = {
