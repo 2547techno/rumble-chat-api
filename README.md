@@ -65,3 +65,27 @@ type Message = {
     from: User;
 };
 ```
+
+## `/emotes/:sid`
+
+Get list of emotes for stream
+
+### Params
+
+`sid`: Stream ID
+
+### Response
+
+List of emotes of type `Emote[]`
+
+```ts
+type Emote = {
+    id: number;
+    name: string;
+    packId: number;
+    emotesPackId: number;
+    isSubsOnly: boolean;
+    moderationStatus: string;
+    file: string;
+};
+```
