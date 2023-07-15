@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { logger } from "../lib/logging";
 const router = Router();
 
 // <link rel=alternate href=https://rumble.com/api/Media/oembed.json?url=https%3A%2F%2Frumble.com%2Fembed%2Fv2x4i5w%2F
@@ -43,7 +44,7 @@ router.get("/chat/:video", async (req, res) => {
     try {
         sid = await urlIdToStreamId(id);
     } catch (err) {
-        console.log((err as Error).message);
+        logger.error("GetStream", (err as Error).message);
         return res.status(500).send();
     }
 
@@ -61,7 +62,7 @@ router.get("/chat/channel/:channel", async (req, res) => {
     try {
         sid = await urlIdToStreamId(`/c/${req.params.channel}/live/`);
     } catch (err) {
-        console.log((err as Error).message);
+        logger.error("GetStream", (err as Error).message);
         return res.status(500).send();
     }
 

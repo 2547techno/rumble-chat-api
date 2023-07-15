@@ -1,5 +1,6 @@
 import EventSource from "eventsource";
 import { events } from "./events";
+import { logger } from "./logging";
 export const streams: Map<number, EventSource> = new Map();
 export const connections: Map<number, number> = new Map();
 
@@ -26,7 +27,7 @@ function removeStream(sid: number) {
     streams.get(sid)?.close();
     streams.delete(sid);
     connections.delete(sid);
-    console.log("[SSE] Removed", sid);
+    logger.info("SSE", `Removed ${sid}`);
 }
 
 export async function addStream(sid: number) {
@@ -62,16 +63,18 @@ export async function addStream(sid: number) {
                 break;
             }
             case MessageType.DELETE_NON_RANT: {
-                console.log("[SSE] delete_non_rant_messages message for", sid);
+                logger.info(
+                    "SSE",
+                    `delete_non_rant_messages message for ${sid}`
+                );
                 break;
             }
             default: {
-                console.log("[SSE] Undefined message type!");
-                console.log(msg);
+                logger.info("SSE", "Undefined message type!", msg);
             }
         }
     });
 
     streams.set(sid, sse);
-    console.log("[SSE] Added", sid);
+    logger.info("SSE", `Added ${sid}`);
 }
