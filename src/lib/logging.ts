@@ -19,7 +19,7 @@ class Logger {
     }
 
     private log(text: string, object?: object) {
-        console.log(text);
+        console.log(chalk.yellowBright(new Date().toLocaleString()), text);
         if (object) {
             console.log(object);
         }
