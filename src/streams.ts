@@ -45,7 +45,7 @@ export async function addStream(sid: number) {
         const data = JSON.parse(msg.data);
         switch (data.type as MessageType) {
             case MessageType.INIT: {
-                console.log("[SSE] Init message for", sid);
+                events.emit(`chat-${sid}`, data.data);
                 break;
             }
             case MessageType.MESSAGES: {
