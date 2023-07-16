@@ -49,6 +49,7 @@ function parseMessages(data: any) {
         });
     }
 
+    prom.messagesReceived.inc(messages.length);
     return messages;
 }
 

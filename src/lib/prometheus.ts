@@ -1,4 +1,4 @@
-import { Gauge } from "prom-client";
+import { Counter, Gauge } from "prom-client";
 
 const rumbleConnections = new Gauge({
     name: "rumble_api_rumble_connections_total",
@@ -16,8 +16,14 @@ const clientConnectionsSum = new Gauge({
     help: "Number of clients connected to service total",
 });
 
+const messagesReceived = new Counter({
+    name: "rumble_api_messages_received_total",
+    help: "The number of messages received from all streams"
+})
+
 export const prom = {
     rumbleConnections,
     clientConnections,
-    clientConnectionsSum
+    clientConnectionsSum,
+    messagesReceived
 };
