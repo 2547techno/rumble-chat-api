@@ -2,6 +2,10 @@ import Express from "express";
 import cors from "cors";
 import { routes } from "./routes/routes";
 import { logger } from "./lib/logging";
+import { loadEnv } from "./lib/env";
+
+loadEnv();
+
 const app = Express();
 
 const PORT = process.env.PORT ?? 8080;
