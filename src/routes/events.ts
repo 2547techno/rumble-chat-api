@@ -71,6 +71,18 @@ router.get("/events/chat/:id", async (req, res) => {
     res.setHeader("X-Accel-Buffering", "no");
     res.flushHeaders();
 
+    res.write(`data: ${JSON.stringify([{
+        id: 'connected',
+        timestamp: 'connected',
+        text: '',
+        from: {
+            id: 'connected',
+            username: 'Connected to chat!',
+            isFollower: false,
+            color: '#bbbbbb'
+        }
+    }] as Message[])}\n\n`);
+
     const cb = (data: any) => {
         const messages = parseMessages(data);
         res.write(`data: ${JSON.stringify(messages)}\n\n`);
