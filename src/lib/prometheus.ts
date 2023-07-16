@@ -18,12 +18,25 @@ const clientConnectionsSum = new Gauge({
 
 const messagesReceived = new Counter({
     name: "rumble_api_messages_received_total",
-    help: "The number of messages received from all streams"
-})
+    help: "The number of messages received from all streams",
+});
+
+const httpRequests = new Counter({
+    name: "rumble_api_http_received_total",
+    help: "Number of http requests received per endpoint",
+    labelNames: ["endpoint"],
+});
+
+const httpRequestsSum = new Counter({
+    name: "rumble_api_http_received_sum_total",
+    help: "Number of http requests received total",
+});
 
 export const prom = {
     rumbleConnections,
     clientConnections,
     clientConnectionsSum,
-    messagesReceived
+    messagesReceived,
+    httpRequests,
+    httpRequestsSum,
 };

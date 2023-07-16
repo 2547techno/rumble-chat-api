@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { logger } from "../lib/logging";
+import { prom } from "../lib/prometheus";
 const router = Router();
 
 // <link rel=alternate href=https://rumble.com/api/Media/oembed.json?url=https%3A%2F%2Frumble.com%2Fembed%2Fv2x4i5w%2F
@@ -35,6 +36,8 @@ async function urlIdToStreamId(urlId: string) {
 }
 
 router.get("/chat/:video", async (req, res) => {
+    prom.httpRequests.inc({ endpoint: "/chat/:video" });
+    prom.httpRequestsSum.inc();
     if (!req.params.video) {
         return res.status(400).send();
     }
@@ -54,6 +57,8 @@ router.get("/chat/:video", async (req, res) => {
 });
 
 router.get("/chat/channel/:channel", async (req, res) => {
+    prom.httpRequests.inc({ endpoint: "/chat/channel/:channel" });
+    prom.httpRequestsSum.inc();
     if (!req.params.channel) {
         return res.status(400).send();
     }
