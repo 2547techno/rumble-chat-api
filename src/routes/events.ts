@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { events } from "../lib/events";
 import { addStream, connections } from "../lib/streams";
+import { prom } from "../lib/prometheus";
 const router = Router();
 
 type User = {
@@ -59,6 +60,7 @@ router.get("/events/chat/:id", async (req, res) => {
         return res.status(404).send();
     }
     connections.set(sid, Number(connections.get(sid) ?? 0) + 1);
+    prom.rumbleConnections.inc();
 
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Content-Type", "text/event-stream");
@@ -76,6 +78,7 @@ router.get("/events/chat/:id", async (req, res) => {
 
     res.on("close", () => {
         connections.set(sid, Number(connections.get(sid) ?? 0) - 1);
+        prom.rumbleConnections.dec();
         events.removeListener(`chat-${req.params.id}`, cb);
         res.end();
     });
