@@ -1,4 +1,8 @@
-import { Counter, Gauge } from "prom-client";
+import { Counter, Gauge, collectDefaultMetrics } from "prom-client";
+
+collectDefaultMetrics({
+    prefix: "rumble_api_",
+});
 
 const rumbleConnections = new Gauge({
     name: "rumble_api_rumble_connections_total",
