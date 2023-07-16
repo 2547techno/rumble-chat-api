@@ -7,11 +7,17 @@ const rumbleConnections = new Gauge({
 
 const clientConnections = new Gauge({
     name: "service_client_connections_total",
-    help: "Number of clients connected to service",
+    help: "Number of clients connected to service per stream",
     labelNames: ["sid"],
+});
+
+const clientConnectionsSum = new Gauge({
+    name: "service_client_connections_sum_total",
+    help: "Number of clients connected to service total",
 });
 
 export const prom = {
     rumbleConnections,
     clientConnections,
+    clientConnectionsSum
 };
