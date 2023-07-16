@@ -1,6 +1,7 @@
 import EventSource from "eventsource";
 import { events } from "./events";
 import { logger } from "./logging";
+import { prom } from "./prometheus";
 export const streams: Map<number, EventSource> = new Map();
 export const connections: Map<number, number> = new Map();
 
@@ -28,6 +29,7 @@ function removeStream(sid: number) {
     streams.delete(sid);
     connections.delete(sid);
     logger.info("SSE", `Removed ${sid}`);
+    prom.rumbleConnections.dec();
 }
 
 export async function addStream(sid: number) {
@@ -77,4 +79,5 @@ export async function addStream(sid: number) {
 
     streams.set(sid, sse);
     logger.info("SSE", `Added ${sid}`);
+    prom.rumbleConnections.inc();
 }
