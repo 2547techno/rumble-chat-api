@@ -62,7 +62,6 @@ router.get("/events/chat/:id", async (req, res) => {
     }
     connections.set(sid, Number(connections.get(sid) ?? 0) + 1);
     prom.clientConnections.inc({ sid });
-    prom.clientConnectionsSum.inc();
 
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Content-Type", "text/event-stream");
@@ -97,7 +96,6 @@ router.get("/events/chat/:id", async (req, res) => {
     res.on("close", () => {
         connections.set(sid, Number(connections.get(sid) ?? 0) - 1);
         prom.clientConnections.dec({ sid });
-        prom.clientConnectionsSum.dec();
         events.removeListener(`chat-${req.params.id}`, cb);
         res.end();
     });

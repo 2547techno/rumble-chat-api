@@ -42,7 +42,6 @@ async function getEmotes(sid: string): Promise<Emote[]> {
 
 router.get("/emotes/:sid", async (req, res) => {
     prom.httpRequests.inc({ endpoint: "/emotes/:sid" });
-    prom.httpRequestsSum.inc();
     const emotes = await getEmotes(req.params.sid);
 
     res.json(emotes);

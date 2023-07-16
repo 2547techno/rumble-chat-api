@@ -37,7 +37,6 @@ async function urlIdToStreamId(urlId: string) {
 
 router.get("/chat/:video", async (req, res) => {
     prom.httpRequests.inc({ endpoint: "/chat/:video" });
-    prom.httpRequestsSum.inc();
     if (!req.params.video) {
         return res.status(400).send();
     }
@@ -58,7 +57,6 @@ router.get("/chat/:video", async (req, res) => {
 
 router.get("/chat/channel/:channel", async (req, res) => {
     prom.httpRequests.inc({ endpoint: "/chat/channel/:channel" });
-    prom.httpRequestsSum.inc();
     if (!req.params.channel) {
         return res.status(400).send();
     }
