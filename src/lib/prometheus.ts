@@ -8,6 +8,7 @@ const rumbleConnections = new Gauge({
 const clientConnections = new Gauge({
     name: "service_client_connections_total",
     help: "Number of clients connected to service",
+    labelNames: ["sid"],
 });
 
 export const prom = {

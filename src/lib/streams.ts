@@ -30,6 +30,7 @@ function removeStream(sid: number) {
     connections.delete(sid);
     logger.info("SSE", `Removed ${sid}`);
     prom.rumbleConnections.dec();
+    prom.clientConnections.remove({ sid });
 }
 
 export async function addStream(sid: number) {
