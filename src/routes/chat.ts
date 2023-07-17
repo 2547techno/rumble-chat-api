@@ -46,7 +46,7 @@ router.get("/chat/:video", async (req, res) => {
     try {
         sid = await urlIdToStreamId(id);
     } catch (err) {
-        logger.error("GetStream", (err as Error).message);
+        logger.error("GetStreamFromVideoID", (err as Error).message);
         return res.status(500).send();
     }
 
@@ -65,7 +65,26 @@ router.get("/chat/channel/:channel", async (req, res) => {
     try {
         sid = await urlIdToStreamId(`/c/${req.params.channel}/live/`);
     } catch (err) {
-        logger.error("GetStream", (err as Error).message);
+        logger.error("GetStreamFromChannel", (err as Error).message);
+        return res.status(500).send();
+    }
+
+    return res.json({
+        streamId: sid,
+    });
+});
+
+router.get("/chat/user/:user", async (req, res) => {
+    prom.httpRequests.inc({ endpoint: "/chat/user/:user" });
+    if (!req.params.user) {
+        return res.status(400).send();
+    }
+
+    let sid: number;
+    try {
+        sid = await urlIdToStreamId(`/user/${req.params.user}/live/`);
+    } catch (err) {
+        logger.error("GetStreamFromUser", (err as Error).message);
         return res.status(500).send();
     }
 
