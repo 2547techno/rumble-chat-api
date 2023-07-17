@@ -59,7 +59,7 @@ router.get("/events/chat/:id", async (req, res) => {
     try {
         await addStream(sid);
     } catch (err) {
-        logger.error("addStream", (err as Error).message);
+        logger.error("AddStream", (err as Error).message);
         return res.status(404).send();
     }
     connections.set(sid, Number(connections.get(sid) ?? 0) + 1);
