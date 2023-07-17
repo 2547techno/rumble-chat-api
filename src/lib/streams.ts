@@ -40,7 +40,9 @@ export async function addStream(sid: number) {
         `https://web7.rumble.com/chat/api/chat/${sid}/stream`
     );
     if (res.status === 204 || !res.ok)
-        throw new Error(`Cannot connect to chat: ${sid} | status ${res.status}`);
+        throw new Error(
+            `Cannot connect to chat: ${sid} | status ${res.status}`
+        );
 
     const sse = new EventSource(
         `https://web7.rumble.com/chat/api/chat/${sid}/stream`
@@ -66,14 +68,14 @@ export async function addStream(sid: number) {
                 break;
             }
             case MessageType.DELETE_NON_RANT: {
-                logger.info(
+                logger.debug(
                     "SSE",
                     `delete_non_rant_messages message for ${sid}`
                 );
                 break;
             }
             default: {
-                logger.info("SSE", "Undefined message type!", msg);
+                logger.debug("SSE", "Undefined message type!", msg);
             }
         }
     });

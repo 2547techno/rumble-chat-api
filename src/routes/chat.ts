@@ -31,7 +31,14 @@ async function urlIdToStreamId(urlId: string) {
     const embedId = await getEmbedId(urlId);
     if (!embedId) throw new Error(`Cannot find embed ID | urlId: ${urlId}`);
     const id = await getVideoId(embedId);
-    if (!id) throw new Error(`Cannot get video ID | embedId: ${embedId} | urlId: ${urlId}`);
+    if (!id)
+        throw new Error(
+            `Cannot get video ID | embedId: ${embedId} | urlId: ${urlId}`
+        );
+    logger.debug(
+        "UrlToId",
+        `urlId: ${urlId} | embedId: ${embedId} | sid: ${id}`
+    );
     return id;
 }
 
