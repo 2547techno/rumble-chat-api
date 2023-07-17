@@ -9,7 +9,7 @@ async function getEmbedId(urlId: string) {
     const html = await res.text();
 
     const regex =
-        /<link rel=alternate href="https:\/\/rumble\.com\/api\/Media\/oembed\.json\?url=(.+)" title=".+" type=application\/json\+oembed>/;
+        /<link rel=alternate href="https:\/\/rumble\.com\/api\/Media\/oembed\.json\?url=(.+)" title=.+ type=application\/json\+oembed>/;
     const match = html.match(regex);
     if (!match) return;
 
