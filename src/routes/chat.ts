@@ -63,7 +63,7 @@ router.get("/chat/channel/:channel", async (req, res) => {
 
     let sid: number;
     try {
-        sid = await urlIdToStreamId(`/c/${req.params.channel}/live/`);
+        sid = await urlIdToStreamId(`/user/${req.params.channel}/live/`);
     } catch (err) {
         logger.error("GetStream", (err as Error).message);
         return res.status(500).send();
