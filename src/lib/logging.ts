@@ -4,7 +4,7 @@ enum Level {
     ERROR = 0,
     WARN = 1,
     INFO = 2,
-    DEBUG = 4,
+    DEBUG = 3,
 }
 
 class Logger {
@@ -12,6 +12,7 @@ class Logger {
 
     constructor(initLevel: Level = Level.INFO) {
         this.level = initLevel;
+        this.info("Logger", `Log Level: ${Level[this.level]}`);
     }
 
     setLevel(level: Level) {
@@ -70,4 +71,4 @@ class Logger {
     }
 }
 
-export const logger = new Logger(Level.DEBUG);
+export const logger = new Logger(Number(process.env.LOG_LEVEL ?? 2) as Level);
