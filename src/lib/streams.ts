@@ -40,7 +40,7 @@ export async function addStream(sid: number) {
         `https://web7.rumble.com/chat/api/chat/${sid}/stream`
     );
     if (res.status === 204 || !res.ok)
-        throw new Error(`Cannot connect to chat | status ${res.status}`);
+        throw new Error(`Cannot connect to chat: ${sid} | status ${res.status}`);
 
     const sse = new EventSource(
         `https://web7.rumble.com/chat/api/chat/${sid}/stream`

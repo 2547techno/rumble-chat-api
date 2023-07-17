@@ -2,6 +2,7 @@ import { Router } from "express";
 import { events } from "../lib/events";
 import { addStream, connections } from "../lib/streams";
 import { prom } from "../lib/prometheus";
+import { logger } from "../lib/logging";
 const router = Router();
 
 type User = {
@@ -58,6 +59,7 @@ router.get("/events/chat/:id", async (req, res) => {
     try {
         await addStream(sid);
     } catch (err) {
+        logger.error("addStream", (err as Error).message);
         return res.status(404).send();
     }
     connections.set(sid, Number(connections.get(sid) ?? 0) + 1);
