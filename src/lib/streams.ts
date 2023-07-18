@@ -5,7 +5,27 @@ import { prom } from "./prometheus";
 export const streams: Map<number, EventSource> = new Map();
 export const connections: Map<number, number> = new Map();
 
+enum MessageType {
+    INIT = "init",
+    MESSAGES = "messages",
+    DELETE_NON_RANT = "delete_non_rant_messages",
+}
+
 setInterval(() => {
+    pruneStreams();
+    sendPings();
+}, 30_000);
+
+function sendPings() {
+    for (const sid of streams.keys()) {
+        events.emit(`chat-${sid}`, {
+            users: [],
+            messages: [],
+        });
+    }
+}
+
+function pruneStreams() {
     for (const key of connections.keys()) {
         if (!connections.has(key)) continue;
 
@@ -16,12 +36,6 @@ setInterval(() => {
             removeStream(key);
         }
     }
-}, 30_000);
-
-enum MessageType {
-    INIT = "init",
-    MESSAGES = "messages",
-    DELETE_NON_RANT = "delete_non_rant_messages",
 }
 
 function removeStream(sid: number) {

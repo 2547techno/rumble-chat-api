@@ -92,10 +92,6 @@ router.get("/events/chat/:id", async (req, res) => {
         ] as Message[])}\n\n`
     );
 
-    const pingInterval = setInterval(() => {
-        res.write(`data: ${JSON.stringify([])}\n\n`);
-    }, 30_000);
-
     const cb = (data: any) => {
         const messages = parseMessages(data);
         res.write(`data: ${JSON.stringify(messages)}\n\n`);
@@ -111,7 +107,6 @@ router.get("/events/chat/:id", async (req, res) => {
         );
         prom.clientConnections.dec({ sid });
         events.removeListener(`chat-${req.params.id}`, cb);
-        clearInterval(pingInterval);
         res.end();
     });
 });
